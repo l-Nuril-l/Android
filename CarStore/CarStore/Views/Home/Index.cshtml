@@ -1,0 +1,35 @@
+﻿@model IEnumerable<CarStore.Models.Car>
+@{
+    //ViewData["Title"] = "Home Page";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car shop</title>
+</head>
+<body>
+   <h1>Cars</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Model</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var car in Model)
+            {
+                <tr>
+                    <td>@car.Title</td>
+                    <td>@car.Model</td>
+                    <td>@car.Price</td>
+                    <td><a href="~/Home/Buy/@car.CarId">Buy</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
