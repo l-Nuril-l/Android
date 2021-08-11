@@ -1,0 +1,23 @@
+﻿@model CarStore.Models.Car
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<form method="post">
+    @Html.HiddenFor(x => x.CarId)
+    <div>
+        @Html.LabelFor(x => x.Title)
+        @Html.TextBoxFor(x => x.Title)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Model)
+        @Html.TextBoxFor(x => x.Model)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Price)
+        @Html.TextBoxFor(x => x.Price)
+    </div>
+    <input type="submit" value="Create" />
+</form>
