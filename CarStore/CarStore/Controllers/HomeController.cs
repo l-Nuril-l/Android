@@ -36,11 +36,23 @@ namespace CarStore.Controllers
         }
 
         [HttpPost]
-        public string Buy(Order order)
+        public IActionResult Buy(Order order)
         {
-            db.Orders.Add(order);
-            db.SaveChanges();
-            return $"Thanks, {order.Name}!";
+            if (order.Name?.ToLower() == "test")
+            {
+                ModelState.AddModelError("Name", "You cannot use test");
+            }
+
+            if (ModelState.IsValid)
+            {
+                db.Orders.Add(order);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
         }
 
       

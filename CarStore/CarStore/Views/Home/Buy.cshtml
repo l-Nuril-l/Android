@@ -1,33 +1,30 @@
-﻿
+﻿@model CarStore.Models.Order
 @{
-//Layout = null;
+
 }
 
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Order page</title>
-</head>
-<body>
     <div>
         <h1>Purchase form</h1>
         <form method="post">
+            @*@Html.ValidationSummary()*@
             <input type="hidden" value="@ViewBag.CarId" name="CarId" />
             <div>
-                <label>Name: </label>
-                <input type="text" name="Name" />
+               @Html.LabelFor(x => x.Name)
+               @Html.TextBoxFor(x => x.Name)
+                @*@Html.ValidationMessageFor(x => x.Name)*@
+                <span asp-validation-for="Name"></span>
             </div>
             <div>
-                <label>Lastname: </label>
-                <input type="text" name="Lastname" />
+                @Html.LabelFor(x => x.Lastname)
+                @Html.TextBoxFor(x => x.Lastname)
+                @Html.ValidationMessageFor(x => x.Lastname)
             </div>
             <div>
-                <label>PhoneNumber: </label>
-                <input type="text" name="PhoneNumber" />
+                @Html.LabelFor(x => x.PhoneNumber)
+                @Html.TextBoxFor(x => x.PhoneNumber)
+                @Html.ValidationMessageFor(x => x.PhoneNumber)
             </div>
             <input type="submit" value="Send"/>
         </form>
     </div>
-</body>
-</html>
