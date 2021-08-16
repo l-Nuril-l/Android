@@ -27,6 +27,14 @@
                     <td>@car.Model</td>
                     <td>@car.Price</td>
                     <td><a href="~/Home/Buy/@car.CarId">Buy</a></td>
+                    <td>
+                        @using (Html.BeginForm("AddToCart", "Cart"))
+                        {
+                            <input type="hidden" value="@car.CarId" name="CarId" />
+                            @Html.Hidden("returnUrl", Context.Request.Path)
+                            <input type="submit" value="+ Add to Cart" class="btn btn-secondary" />
+                        }
+                    </td>
                 </tr>
             }
         </tbody>

@@ -1,0 +1,39 @@
+﻿@model CarStore.Models.ViewModels.CartIndexViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cart</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Quantity</th>
+            <th>Title</th>
+            <th>Model</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.Cart.Lines)
+        {
+        <tr>
+            <td>@line.Quantity</td>
+            <td>@line.Car.Title</td>
+            <td>@line.Car.Model</td>
+            <td>@line.Car.Price</td>
+            <td>@(line.Quantity * line.Car.Price)</td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>Total: </td>
+            <td>@Model.Cart.ComputeTotalValue()</td>
+        </tr>
+    </tfoot>
+</table>
+
+<p class="btn btn-primary">
+    <a href="@Model.ReturnUrl">Continue shopping</a>
+</p>

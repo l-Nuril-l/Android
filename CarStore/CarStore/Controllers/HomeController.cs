@@ -1,4 +1,5 @@
 ﻿using CarStore.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,6 +21,8 @@ namespace CarStore.Controllers
 
         public IActionResult Index()
         {
+           
+
             return View(db.Cars.ToList());
         }
 
