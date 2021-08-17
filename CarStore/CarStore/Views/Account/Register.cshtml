@@ -1,0 +1,29 @@
+﻿@model CarStore.Models.ViewModels.RegisterViewModel 
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>Register</h1>
+<form asp-action="Register" asp-controller="Account" asp-antiforgery="true">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div>
+        <div>
+            @Html.LabelFor(x => x.Email)
+            @Html.TextBoxFor(x => x.Email)
+            @Html.ValidationMessageFor(x => x.Email)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Password)
+            @Html.PasswordFor(x => x.Password)
+            @Html.ValidationMessageFor(x => x.Password)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.ConfirmPassword)
+            @Html.PasswordFor(x => x.ConfirmPassword)
+            @Html.ValidationMessageFor(x => x.ConfirmPassword)
+        </div>
+        <input type="submit" value="Register" class="btn btn-primary" />
+    </div>
+</form>

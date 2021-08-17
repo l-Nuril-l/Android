@@ -1,4 +1,5 @@
 ﻿using CarStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace CarStore.Controllers
 {
+    //[AllowAnonymous]
+    [Authorize]
     public class AdminController : Controller
     {
         CarContext context;
