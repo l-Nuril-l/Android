@@ -11,6 +11,8 @@ namespace CarStore.Models.ViewModels
         [Required]
         public string Email { get; set; }
         [Required]
+        public int Year { get; set; }
+        [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [DataType(DataType.Password)]

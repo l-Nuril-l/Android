@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace CarStore.Controllers
 {
     //[AllowAnonymous]
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public class AdminController : Controller
     {
         CarContext context;

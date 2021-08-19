@@ -20,6 +20,11 @@
             @Html.PasswordFor(x => x.Password)
             @Html.ValidationMessageFor(x => x.Password)
         </div>
-        <input type="submit" value="Login" class="btn btn-primary"/>
+        <div>
+            @Html.LabelFor(x => x.RememberMe)
+            @Html.CheckBoxFor(x => x.RememberMe)
+            @Html.ValidationMessageFor(x => x.Password)
+        </div>
+        <input type="submit" value="Login" class="btn btn-primary" />
     </div>
 </form>
