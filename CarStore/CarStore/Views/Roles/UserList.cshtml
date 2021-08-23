@@ -1,0 +1,14 @@
+﻿@model IEnumerable<CarStore.Models.User>
+
+<h1>Users list</h1>
+<table class="table">
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Email</td>
+            <td>
+                <a asp-action="Edit" asp-route-userId="@user.Id" class="btn btn-primary">Edit</a>
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,16 @@
+﻿@model CarStore.Models.ViewModels.ChangeRoleViewModel
+
+
+<h1>Change roles for @Model.UserEmail</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" name="userId" value="@Model.UserId" />
+    <div class="form-group">
+        @foreach (var role in Model.AllRoles)
+        {
+            <input type="checkbox" name="roles" value="@role.Name"
+                   @(Model.UserRoles.Contains(role.Name) ? "checked='checked'" : "") />@role.Name <br/>
+        }
+    </div>
+    <input type="submit"  class="btn btn-primary" value="Save"/>
+</form>
