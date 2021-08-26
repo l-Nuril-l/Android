@@ -1,6 +1,8 @@
 ﻿using CarStore.Models;
+using CarStore.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -19,12 +21,43 @@ namespace CarStore.Controllers
             db = context;
         }
 
-        public IActionResult Index()
-        {
-           
+        //public IActionResult Index(SortType sortType = SortType.TitleAsc)
+        //{
+        //    IEnumerable<Car> result = null;
+        //    switch (sortType)
+        //    {
+        //        case SortType.TitleAsc:
+        //            result = db.Cars.OrderBy(x => x.Title).ToList();
+        //            break;
+        //        case SortType.ModelAsc:
+        //            result = db.Cars.OrderBy(x => x.Model).ToList();
+        //            break;
+        //        case SortType.PriceAsc:
+        //            result = db.Cars.OrderBy(x => x.Price).ToList();
+        //            break;
+        //        default:
+        //            result = db.Cars.ToList();
+        //            break;
+        //    }
+        //    return View(result);
+        //}
 
-            return View(db.Cars.ToList());
+        public IActionResult Index(string company = "all")
+        {
+            var selectListItems = new List<string>
+            {
+                "all"
+            };
+            selectListItems.AddRange(db.Cars.Select(x => x.Title));
+            
+            
+            return View(new CarListViewModel
+            {
+                Cars = company == "all" ? db.Cars.ToList() : db.Cars.Where(x => x.Title.ToLower() == company.ToLower()).ToList(),
+                Companies = new SelectList(selectListItems)
+            });
         }
+      
 
         [HttpGet]
         public IActionResult Buy(int? id)
@@ -58,6 +91,6 @@ namespace CarStore.Controllers
             }
         }
 
-      
+
     }
 }
