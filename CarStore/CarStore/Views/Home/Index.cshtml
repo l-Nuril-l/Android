@@ -5,44 +5,21 @@
 
 
    <h1>Cars</h1>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    <a asp-controller="Home" asp-action="Index" asp-route-sortType="TitleAsc">Title</a>                   
-                </th>
-                <th>
-                    <a asp-controller="Home" asp-action="Index" asp-route-sortType="ModelAsc">Model</a>
-                </th>
-                <th>
-                    <a asp-controller="Home" asp-action="Index" asp-route-sortType="PriceAsc">Price</a>
-                </th>
-                <th>
-                    <form asp-controller="Home" asp-action="Index" method="get">
-                        <select name="company" asp-items="Model.Companies"></select>
-                        <input type="submit" value="Filter" />
-                     </form>
 
-</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var car in Model.Cars)
-            {
-                <tr>
-                    <td>@car.Title</td>
-                    <td>@car.Model</td>
-                    <td>@car.Price</td>
-                    <td><a href="~/Home/Buy/@car.CarId">Buy</a></td>
-                    <td>
-                        @using (Html.BeginForm("AddToCart", "Cart"))
-                        {
-                            <input type="hidden" value="@car.CarId" name="CarId" />
-                            @Html.Hidden("returnUrl", Context.Request.Path)
-                            <input type="submit" value="+ Add to Cart" class="btn btn-secondary" />
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+
+
+    @*<form asp-action="index" method="get">
+        <input type="text" name="search" />
+        <button type="submit">Search</button>
+    </form>*@
+
+ @*@await Html.PartialAsync("CarsList")*@
+
+<div class="form-group">
+    <input id="searchText" type="text" class="form-control" />
+    <button id="search" class="btn btn-primary">Search</button>
+</div>
+
+<div id="car-list">
+ 
+</div>

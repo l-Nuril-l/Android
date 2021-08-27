@@ -42,22 +42,39 @@ namespace CarStore.Controllers
         //    return View(result);
         //}
 
-        public IActionResult Index(string company = "all")
+        public IActionResult Index()
+        {
+          
+            return View();
+        }
+      
+
+        public IActionResult CarsList(string search = "", string company = "all")
         {
             var selectListItems = new List<string>
             {
                 "all"
             };
             selectListItems.AddRange(db.Cars.Select(x => x.Title));
-            
-            
-            return View(new CarListViewModel
+
+
+            var cars = company == "all" ? db.Cars.ToList() : db.Cars.Where(x => x.Title.ToLower() == company.ToLower()).ToList();
+            if (!string.IsNullOrEmpty(search))
             {
-                Cars = company == "all" ? db.Cars.ToList() : db.Cars.Where(x => x.Title.ToLower() == company.ToLower()).ToList(),
+                cars = cars.Where(x => x.Title.ToLower().Contains(search.ToLower())).ToList();
+            }
+
+            return PartialView(new CarListViewModel
+            {
+                Cars = cars,
                 Companies = new SelectList(selectListItems)
             });
         }
-      
+
+        //public IActionResult CarsJson()
+        //{
+        //    return Json();
+        //}
 
         [HttpGet]
         public IActionResult Buy(int? id)

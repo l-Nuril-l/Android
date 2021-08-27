@@ -2,3 +2,13 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+$('#car-list')
+    .load('/Home/CarsList')
+
+$('#search').on('click', function () {
+    let searchText = $('#searchText').val()
+
+    $('#car-list')
+        .load(`/Home/CarsList/?search=${searchText}`)
+})
