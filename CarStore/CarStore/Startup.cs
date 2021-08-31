@@ -58,7 +58,8 @@ namespace CarStore
 
             app.UseStatusCodePages("text/html", "We're <b>really</b> sorry, but something went wrong. Error code: {0}");
             app.UseHttpsRedirection();
-          
+
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             app.UseRouting();

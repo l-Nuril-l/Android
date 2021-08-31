@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <h1>Car list</h1>
+        <form name="carForm">
+            <input type="hidden" name="carId" value="0" />
+            <div class="form-group">
+                <label for="title">Title: </label>
+                <input type="text" name="title" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="model">Model: </label>
+                <input type="text" name="model" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="price">Price: </label>
+                <input type="number" name="price" class="form-control" />
+            </div>
+            <button type="submit" id="submit" class="btn btn-primary">Save</button>
+        </form>
+
+
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <td>Title</td>
+                    <td>Model</td>
+                    <td>Price</td>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+   
+
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>
