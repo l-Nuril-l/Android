@@ -1,6 +1,14 @@
-﻿async function getCars() {
+﻿var tokenKey = "accessToken"
+
+async function getCars() {
+
+    const token = sessionStorage.getItem(tokenKey)
+
     const response = await fetch('/api/cars', {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            'Authorization': 'bearer ' + token
+        }
     })
 
     if (response.ok === true) {
@@ -95,3 +103,35 @@ document.forms['carForm'].addEventListener('submit', function (e) {
 })
 
 getCars()
+
+
+
+
+async function getTokenAsync() {
+    const credentials = {
+        login: document.querySelector('#login').value,
+        password: document.querySelector('#password').value
+    }
+   
+    const response = await fetch('api/account/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials)
+    })
+
+    const data = await response.json()
+    if (response.ok === true) {
+        sessionStorage.setItem(tokenKey, data.access_token)
+        getCars()
+    } else {
+        console.log(response.status, data.errorText)
+    }
+
+
+}
+
+
+document.getElementById('submitLogin').addEventListener('click', function () {
+    getTokenAsync()
+    alert('ff')
+})

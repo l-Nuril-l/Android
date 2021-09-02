@@ -1,5 +1,7 @@
+using CarStore.Config;
 using CarStore.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,9 +34,35 @@ namespace CarStore
             services.AddDbContext<CarContext>(options => options.UseSqlServer(connection));
             services.AddDbContext<IdentityContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+
+
+
+        
+
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+               .AddJwtBearer(options =>
+               {
+                   options.RequireHttpsMetadata = false;
+                   options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                   {
+                       ValidateIssuer = true,
+                       ValidIssuer = AuthOptions.ISSUER,
+                       ValidateAudience = true,
+                       ValidAudience = AuthOptions.AUDIENCE,
+                       ValidateLifetime = true,
+                       IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                       ValidateIssuerSigningKey = true
+                   };
+
+               });
+
             services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<IdentityContext>();
-       
+            .AddEntityFrameworkStores<IdentityContext>();
             services.AddControllersWithViews();
             services.AddDistributedMemoryCache();
             services.AddSession();
