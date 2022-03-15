@@ -2,10 +2,8 @@ package com.example.taskintent
 
 import android.content.Context
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -28,6 +26,10 @@ class TaskListFragment : Fragment() {
         ViewModelProvider(this).get(TaskListViewModel::class.java)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -69,6 +71,22 @@ class TaskListFragment : Fragment() {
         callbacks = null
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_task_list, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.new_task -> {
+                val task = Task()
+                taskListViewModel.addTask(task)
+                callbacks?.onTaskSelected(task.id)
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
 
     companion object {
         fun newInstance(): TaskListFragment {
