@@ -7,4 +7,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="new_task">New task</string>
+    <string name="task_share_text">Share task</string>
+    <string name="task_receiver_text">Choose receiver</string>
+    <string name="task_info">%1$s! The task info is %2$s. %3$s, and %4$s</string>
+    <string name="task_info_solved">The task is solved</string>
+    <string name="task_info_unsolved">The task is not solved</string>
+    <string name="task_info_no_receiver">There is no receiver</string>
+    <string name="task_info_receiver">The receiver is %s.</string>
 </resources>

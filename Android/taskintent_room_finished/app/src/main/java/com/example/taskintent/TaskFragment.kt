@@ -1,8 +1,14 @@
 package com.example.taskintent
 
+import android.app.Activity
+import android.app.Instrumentation
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,11 +24,15 @@ private const val ARG_TASK_ID = "task_id"
 private const val TAG = "TaskFragment"
 private const val DIALOG_DATE = "DialogDate"
 private const val REQUEST_DATE = 0
+private const val REQUEST_CONTACT = 1
+private const val DATE_FORMAT = "EEE, MMM, dd"
 
 class TaskFragment : Fragment(), DatePickerFragment.Callbacks {
     private lateinit var task: Task
     private lateinit var titleField: EditText
     private lateinit var dateButton: Button
+    private lateinit var shareTaskButton: Button
+    private lateinit var chooseReceiverButton: Button
     private lateinit var solvedCheckBox: CheckBox
     private val taskDetailViewModel: TaskDetailViewModel by lazy {
         ViewModelProvider(this).get(TaskDetailViewModel::class.java)
@@ -43,6 +53,8 @@ class TaskFragment : Fragment(), DatePickerFragment.Callbacks {
         val view = inflater.inflate(R.layout.fragment_task, container, false)
         titleField = view.findViewById(R.id.task_title) as EditText
         dateButton = view.findViewById(R.id.task_date) as Button
+        shareTaskButton = view.findViewById(R.id.share_task) as Button
+        chooseReceiverButton = view.findViewById(R.id.task_receiver) as Button
         solvedCheckBox = view.findViewById(R.id.task_solved) as CheckBox
 
 
@@ -91,6 +103,23 @@ class TaskFragment : Fragment(), DatePickerFragment.Callbacks {
                 show(this@TaskFragment.parentFragmentManager, DIALOG_DATE)
             }
         }
+
+        shareTaskButton.setOnClickListener {
+            Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, getTaskInfo())
+                putExtra(Intent.EXTRA_SUBJECT, "Task Info")
+            }.also { intent ->
+                startActivity(intent)
+            }
+        }
+
+        chooseReceiverButton.apply {
+            val pickContactIntent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+            setOnClickListener {
+                startActivityForResult(pickContactIntent, REQUEST_CONTACT)
+            }
+        }
     }
 
     override fun onStop() {
@@ -102,6 +131,55 @@ class TaskFragment : Fragment(), DatePickerFragment.Callbacks {
         titleField.setText(task.title)
         dateButton.text = task.date.toString()
         solvedCheckBox.isChecked = task.isSolved
+        solvedCheckBox.jumpDrawablesToCurrentState()
+
+        if (task.receiver.isNotEmpty()) {
+            chooseReceiverButton.text = task.receiver
+        }
+    }
+
+    private fun getTaskInfo(): String {
+        val solvedString = if (task.isSolved) {
+            getString(R.string.task_info_solved)
+        } else {
+            getString(R.string.task_info_unsolved)
+        }
+
+        val dateString = DateFormat.format(DATE_FORMAT, task.date).toString()
+
+        val receiver = if (task.receiver.isBlank()) {
+            getString(R.string.task_info_no_receiver)
+        } else {
+            getString(R.string.task_info_receiver)
+        }
+
+        return getString(R.string.task_info, task.title, dateString, solvedString, receiver)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when {
+            resultCode != Activity.RESULT_OK -> return
+            requestCode == REQUEST_CONTACT && data != null -> {
+                val contactUri: Uri = data.data!!
+                val queryFields = arrayOf(ContactsContract.Contacts.DISPLAY_NAME)
+
+                val cursor = requireActivity().contentResolver
+                    .query(contactUri, queryFields, null, null, null)
+
+                cursor?.use {
+                    if (it.count == 0) {
+                        return
+                    }
+
+                    it.moveToFirst()
+                    val receiver = it.getString(0)
+                    task.receiver = receiver
+                    taskDetailViewModel.saveTask(task)
+                    chooseReceiverButton.text = receiver
+                }
+
+            }
+        }
     }
 
     companion object {

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.example.taskintent.database.TaskDatabase
+import com.example.taskintent.database.migration_1_2
 import java.io.File
 import java.lang.IllegalStateException
 import java.util.*
@@ -19,7 +20,7 @@ class TaskRepository private constructor(context: Context) {
         context.applicationContext,
         TaskDatabase::class.java,
         DATABASE_NAME
-    )
+    ).addMigrations(migration_1_2)
         .build()
 
     private val taskDao = database.taskDao()

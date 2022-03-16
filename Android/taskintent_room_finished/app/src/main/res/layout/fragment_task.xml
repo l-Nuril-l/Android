@@ -40,4 +40,17 @@
         android:layout_height="wrap_content"
         android:text="@string/task_solved_label"/>
 
+    <Button
+        android:layout_marginTop="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/task_receiver"
+        android:text="@string/task_receiver_text"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/share_task"
+        android:text="@string/task_share_text"/>
+
 </LinearLayout>
