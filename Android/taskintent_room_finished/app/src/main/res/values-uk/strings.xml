@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Менеджер задач</string>
+    <string name="task_title_hint">Введіть назву задачі.</string>
+    <string name="task_title_label">Назва</string>
+    <string name="task_details_label">Деталі</string>
+    <string name="task_solved_label">Вирішено</string>
+    <string name="new_task">Нова задача</string>
+    <string name="task_share_text">Поділитися задачею</string>
+    <string name="task_receiver_text">Вибрати отримувача</string>
+    <string name="task_info">%1$s! Інформація про задачу %2$s. %3$s, та %4$s</string>
+    <string name="task_info_solved">Задача вирішена</string>
+    <string name="task_info_unsolved">Задача не вирішена</string>
+    <string name="task_info_no_receiver">Немає отримувача</string>
+    <string name="task_info_receiver">Отримувач: %s.</string>
+</resources>
