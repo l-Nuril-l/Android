@@ -58,4 +58,9 @@ class MusicBox(private val assets: AssetManager) {
         val soundId = soundPool.load(afd, 1)
         sound.soundId = soundId
     }
+
+    fun release() {
+        soundPool.release()
+    }
+
 }
