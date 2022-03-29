@@ -1,16 +1,22 @@
 package com.example.tasklauncher
 
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.format.Formatter.formatFileSize
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.io.File
+
 
 private const val TAG = "TaskLauncherActivity"
 
@@ -44,9 +50,10 @@ class TaskLauncherActivity : AppCompatActivity() {
         recyclerView.adapter = ActivityAdapter(activities)
     }
 
-    private class ActivityHolder(itemView: View)
-        : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        private val nameTextView = itemView as TextView
+    private class ActivityHolder(view: View)
+        : RecyclerView.ViewHolder(view), View.OnClickListener {
+        private val nameTextView = view.findViewById<TextView>(R.id.textView)
+        private val imageView = view.findViewById<ImageView>(R.id.imageView)
         private lateinit var resolveInfo: ResolveInfo
 
         init {
@@ -58,6 +65,7 @@ class TaskLauncherActivity : AppCompatActivity() {
             val packageManager = itemView.context.packageManager
             val appName = resolveInfo.loadLabel(packageManager).toString()
             nameTextView.text = appName
+            imageView.setImageDrawable(resolveInfo.loadIcon(packageManager))
         }
 
         override fun onClick(p0: View?) {
@@ -75,7 +83,7 @@ class TaskLauncherActivity : AppCompatActivity() {
         : RecyclerView.Adapter<ActivityHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            val view = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false)
+            val view = layoutInflater.inflate(R.layout.task_item, parent, false)
             return ActivityHolder(view)
         }
 

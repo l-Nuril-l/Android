@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photogallery.api.FlickrApi
+import com.example.photogallery.swapi.PeopleItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

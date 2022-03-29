@@ -7,6 +7,8 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.photogallery.api.FlickrApi
+import com.example.photogallery.swapi.PeopleItem
+import com.example.photogallery.swapi.PeopleResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,7 +25,7 @@ class FlickrFetchr {
 
     init {
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("https://api.flickr.com/")
+            .baseUrl("https://swapi.dev/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -59,5 +61,30 @@ class FlickrFetchr {
         val response: Response<ResponseBody> = flickrApi.fetchUrlBytes(url).execute()
         val bitmap = response.body()?.byteStream()?.use(BitmapFactory::decodeStream)
         return bitmap
+    }
+
+
+    fun fetchPeoples(): LiveData<List<PeopleItem>> {
+        val responseLiveData: MutableLiveData<List<PeopleItem>> = MutableLiveData()
+        val flickrRequest: Call<PeopleResponse> = flickrApi.fetchPeoples()
+
+        flickrRequest.enqueue(object : Callback<PeopleResponse> {
+            override fun onResponse(call: Call<PeopleResponse>, response: Response<PeopleResponse>) {
+                Log.d(TAG, "Response received")
+
+                val swapiResponse: PeopleResponse? = response.body()
+                var galleryItems: List<PeopleItem> = swapiResponse?.peoples ?: mutableListOf()
+                galleryItems = galleryItems.filterNot { it.name.isBlank() }
+                responseLiveData.value = galleryItems
+                Log.d(TAG, "Response received " + galleryItems.count())
+            }
+
+            override fun onFailure(call: Call<PeopleResponse>, t: Throwable) {
+                Log.e(TAG, "Failed to fetch photos", t)
+            }
+
+        })
+
+        return responseLiveData
     }
 }
