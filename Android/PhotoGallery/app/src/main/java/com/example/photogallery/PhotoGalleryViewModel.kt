@@ -1,12 +1,30 @@
 package com.example.photogallery
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.*
 
-class PhotoGalleryViewModel: ViewModel() {
+class PhotoGalleryViewModel(private val app: Application): AndroidViewModel(app) {
     val galleryItemLiveData: LiveData<List<GalleryItem>>
+    private val flickrFetchr = FlickrFetchr()
+    private val mutableSearchItem = MutableLiveData<String>()
+
+    val searchItem: String
+        get() = mutableSearchItem.value ?: ""
 
     init {
-        galleryItemLiveData = FlickrFetchr().fetchPhotos()
+        mutableSearchItem.value = QueryPreferences.getStoredQuery(app)
+
+        galleryItemLiveData = Transformations.switchMap(mutableSearchItem) { searchItem ->
+            if (searchItem.isBlank()) {
+                flickrFetchr.fetchPhotos()
+            } else {
+                flickrFetchr.searchPhotos(searchItem)
+            }
+        }
+    }
+
+    fun fetchPhotos(query: String = "") {
+        QueryPreferences.setStoredQuery(app, query)
+        mutableSearchItem.value = query
     }
 }
