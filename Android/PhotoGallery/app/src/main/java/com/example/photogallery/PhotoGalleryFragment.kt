@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photogallery.api.FlickrApi
 import com.example.photogallery.swapi.PeopleItem
+import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -83,6 +84,11 @@ class PhotoGalleryFragment : Fragment() {
 
     private class PhotoHolder(private val itemImageView: ImageView) : RecyclerView.ViewHolder(itemImageView) {
         val bindDrawable: (Drawable) -> Unit = itemImageView::setImageDrawable
+        fun imageView(): ImageView
+        {
+            return itemImageView
+        }
+
     }
 
     private inner class PhotoAdapter(private val galleryItems: List<GalleryItem>)
@@ -103,7 +109,14 @@ class PhotoGalleryFragment : Fragment() {
                 com.google.android.material.R.drawable.ic_clock_black_24dp
             ) ?: ColorDrawable()
             holder.bindDrawable(placeholder)
-            thumbnailDownloader.queueThumbnail(holder, galleryItem.url)
+
+            Picasso.with(context)
+                .load(galleryItem.url)
+                .placeholder(placeholder)
+                .error(placeholder)
+                .into(holder.imageView());
+
+            //thumbnailDownloader.queueThumbnail(holder, galleryItem.url)
         }
 
         override fun getItemCount(): Int {
