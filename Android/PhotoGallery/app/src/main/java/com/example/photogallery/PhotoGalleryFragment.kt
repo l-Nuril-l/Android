@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.*
 import com.example.photogallery.api.FlickrApi
 import com.example.photogallery.swapi.PeopleItem
 import com.squareup.picasso.Picasso
@@ -25,10 +26,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.util.concurrent.TimeUnit
 
 private const val TAG = "PhotoGalleryFragment"
+private const val POLL_WORK = "POLL_WORK"
 
-class PhotoGalleryFragment : Fragment() {
+class PhotoGalleryFragment : VisibleFragment() {
 
     private lateinit var photoRecyclerView: RecyclerView
     private lateinit var photoGalleryViewModel: PhotoGalleryViewModel
@@ -46,6 +49,8 @@ class PhotoGalleryFragment : Fragment() {
             photoHolder.bindDrawable(drawable)
         }
         lifecycle.addObserver(thumbnailDownloader.fragmentLifecycleObserver)
+
+
     }
 
     override fun onCreateView(
@@ -109,6 +114,15 @@ class PhotoGalleryFragment : Fragment() {
 
         }
 
+        val toggleItem = menu.findItem(R.id.menu_item_polling)
+        val isPolling = QueryPreferences.isPolling(requireContext())
+        val toggleItemTitle = if (isPolling) {
+            R.string.stop_polling
+        } else {
+            R.string.start_polling
+        }
+        toggleItem.setTitle(toggleItemTitle)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -116,6 +130,32 @@ class PhotoGalleryFragment : Fragment() {
             R.id.menu_item_clear -> {
                 photoGalleryViewModel.fetchPhotos("")
                 true
+            }
+            R.id.menu_item_polling -> {
+                val isPolling = QueryPreferences.isPolling(requireContext())
+                if (isPolling) {
+                    WorkManager.getInstance().cancelUniqueWork(POLL_WORK)
+                    QueryPreferences.setPolling(requireContext(), false)
+                } else {
+                    val constraints = Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.UNMETERED)
+                        .build()
+
+                    val workRequest = PeriodicWorkRequest
+                        .Builder(PollWorker::class.java, 15, TimeUnit.MINUTES)
+                        .setConstraints(constraints)
+                        .build()
+
+                    WorkManager.getInstance()
+                        .enqueueUniquePeriodicWork(
+                            POLL_WORK,
+                            ExistingPeriodicWorkPolicy.KEEP,
+                            workRequest
+                        )
+                    QueryPreferences.setPolling(requireContext(), true)
+                }
+                activity?.invalidateOptionsMenu()
+                return true
             }
             else -> super.onOptionsItemSelected(item)
         }
