@@ -1,5 +1,6 @@
 package com.example.draganddraw
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -21,8 +22,10 @@ class BoxDrawingView(context: Context, attrs: AttributeSet? = null): View(contex
         color = 0xfff8efe0.toInt()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        val current = PointF(event!!.x, event!!.y)
+        val current = PointF(event!!.x, event.y)
+
         var action = ""
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -33,6 +36,7 @@ class BoxDrawingView(context: Context, attrs: AttributeSet? = null): View(contex
             }
             MotionEvent.ACTION_MOVE -> {
                 updateCurrentBox(current)
+                Log.i("MOOVEE", "INDEX = ${event.actionIndex}, PC = ${event.pointerCount}")
             }
             MotionEvent.ACTION_UP -> {
                 action = "ACTION_UP"
@@ -44,20 +48,61 @@ class BoxDrawingView(context: Context, attrs: AttributeSet? = null): View(contex
                 currentBox = null
             }
         }
+
+        when(event.actionMasked) {
+            5 -> {
+                Log.i("DOWN", "DOWN")
+                currentBox?.let{
+                    it.rotateStart = current
+                    it.rotateIndex = event.actionIndex
+                }
+                invalidate()
+            }
+            6 -> {
+                Log.i("UP", "UP")
+                currentBox?.rotateIndex?.let {
+                    rotateCurrentBox(PointF(event.getX(currentBox?.rotateIndex!!),event.getY(currentBox?.rotateIndex!!)))
+                }
+                currentBox?.let{
+                    it.rotateStart = null
+                    it.rotateIndex = null
+                }
+                invalidate()
+            }
+
+        }
+
+        if(event.actionIndex == 0) return true
+        Log.i("TEST_ACTION", "ActionMasked ${event.actionMasked} ActionIndex ${event.actionIndex} PointId0 ${event.getPointerId(0)}" )
+
+        //Log.i("SECOND TOUCH", "x = ${event.getX(1)}, y = ${event.getY(1)}" )
         Log.i(TAG, "$action at x = ${current.x}, y = ${current.y}")
         return true
     }
 
     override fun onDraw(canvas: Canvas?) {
-        canvas?.drawPaint(backgroundPaint)
-        boxes.forEach { box ->
-            canvas?.drawRect(box.left, box.top, box.right, box.bottom, boxPaint)
+        canvas?.apply {
+            drawPaint(backgroundPaint)
+            boxes.forEach { box ->
+                save();
+                rotate(box.rotate);
+                drawRect(box.left, box.top, box.right, box.bottom, boxPaint)
+                restore();
+            }
         }
     }
 
     private fun updateCurrentBox(current: PointF) {
         currentBox?.let {
             it.end = current
+            invalidate()
+        }
+    }
+
+    private fun rotateCurrentBox(current: PointF) {
+        currentBox?.let {
+            it.rotate = (it.rotate + (current.x - it.rotateStart!!.x) + (current.y - it.rotateStart!!.y)) % 360
+            Log.i("ROTATE", "rotate = ${it.rotate}" )
             invalidate()
         }
     }
