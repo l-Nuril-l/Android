@@ -12,7 +12,7 @@ import android.view.View
 
 private const val TAG = "BoxDrawingView"
 
-class BoxDrawingView(context: Context, attrs: AttributeSet? = null): View(context,attrs) {
+class BoxDrawingView(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
     private var currentBox: Box? = null
     private val boxes = mutableListOf<Box>()
     private val boxPaint = Paint().apply {
@@ -49,10 +49,10 @@ class BoxDrawingView(context: Context, attrs: AttributeSet? = null): View(contex
             }
         }
 
-        when(event.actionMasked) {
+        when (event.actionMasked) {
             5 -> {
                 Log.i("DOWN", "DOWN")
-                currentBox?.let{
+                currentBox?.let {
                     it.rotateStart = current
                     it.rotateIndex = event.actionIndex
                 }
@@ -61,9 +61,14 @@ class BoxDrawingView(context: Context, attrs: AttributeSet? = null): View(contex
             6 -> {
                 Log.i("UP", "UP")
                 currentBox?.rotateIndex?.let {
-                    rotateCurrentBox(PointF(event.getX(currentBox?.rotateIndex!!),event.getY(currentBox?.rotateIndex!!)))
+                    rotateCurrentBox(
+                        PointF(
+                            event.getX(currentBox?.rotateIndex!!),
+                            event.getY(currentBox?.rotateIndex!!)
+                        )
+                    )
                 }
-                currentBox?.let{
+                currentBox?.let {
                     it.rotateStart = null
                     it.rotateIndex = null
                 }
@@ -72,8 +77,13 @@ class BoxDrawingView(context: Context, attrs: AttributeSet? = null): View(contex
 
         }
 
-        if(event.actionIndex == 0) return true
-        Log.i("TEST_ACTION", "ActionMasked ${event.actionMasked} ActionIndex ${event.actionIndex} PointId0 ${event.getPointerId(0)}" )
+        if (event.actionIndex == 0) return true
+        Log.i(
+            "TEST_ACTION",
+            "ActionMasked ${event.actionMasked} " +
+                    "ActionIndex ${event.actionIndex} " +
+                    "PointId0 ${event.getPointerId(0)}"
+        )
 
         //Log.i("SECOND TOUCH", "x = ${event.getX(1)}, y = ${event.getY(1)}" )
         Log.i(TAG, "$action at x = ${current.x}, y = ${current.y}")
@@ -101,8 +111,9 @@ class BoxDrawingView(context: Context, attrs: AttributeSet? = null): View(contex
 
     private fun rotateCurrentBox(current: PointF) {
         currentBox?.let {
-            it.rotate = (it.rotate + (current.x - it.rotateStart!!.x) + (current.y - it.rotateStart!!.y)) % 360
-            Log.i("ROTATE", "rotate = ${it.rotate}" )
+            it.rotate = (it.rotate + (current.x - it.rotateStart!!.x) +
+                    (current.y - it.rotateStart!!.y)) % 360
+            Log.i("ROTATE", "rotate = ${it.rotate}")
             invalidate()
         }
     }

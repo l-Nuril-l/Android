@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Shvaiden</string>
+    <string name="very_important">Maided</string>
+    <string name="sender">Sturm</string>
+    <string name="title">Zande</string>
+    <string name="text">Ranto</string>
+    <string name="add_email">Sande postatito</string>
+    <string name="list_empty">Timepity</string>
+    <string name="email_share_text">Dagust</string>
+    <string name="receiver_share_text">Goten</string>
+    <string name="call_text">Fifaro</string>
+    <string name="email_info">Email: %1$s at %2$s to %3$s: %4$s</string>
+    <string name="email_important">Shiduto</string>
+    <string name="email_not_important">Noregis tapis</string>
+    <string name="email_info_no_receiver">Nofen</string>
+    <string name="email_info_receiver">Ovenarger: %s</string>
+</resources>

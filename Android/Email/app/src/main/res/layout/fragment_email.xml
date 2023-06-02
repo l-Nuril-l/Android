@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sender"
+        style="?android:listSeparatorTextViewStyle"
+        />
+
+    <EditText
+        android:id="@+id/sender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/sender"
+        android:minHeight="48dp"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title"
+        style="?android:listSeparatorTextViewStyle"
+        />
+
+    <EditText
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/title"
+        android:minHeight="48dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text"
+        style="?android:listSeparatorTextViewStyle"
+        />
+
+    <EditText
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/text"
+        android:minHeight="48dp" />
+    <Button
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        />
+    <CheckBox
+        android:id="@+id/isImportant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/very_important"
+        />
+    <Button
+        android:id="@+id/email_share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/email_share_text"
+        android:layout_marginTop="24dp"
+        />
+    <Button
+        android:id="@+id/email_receiver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/receiver_share_text"
+        />
+    <Button
+        android:id="@+id/email_call"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/call_text"
+        />
+</LinearLayout>

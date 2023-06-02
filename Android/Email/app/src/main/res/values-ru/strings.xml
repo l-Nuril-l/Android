@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Почта</string>
+    <string name="very_important">Очень важно!</string>
+    <string name="sender">Отправитель</string>
+    <string name="title">Название</string>
+    <string name="text">Текст</string>
+    <string name="add_email">Добавить почту</string>
+    <string name="list_empty">Список пуск</string>
+    <string name="email_share_text">Поделится почтой</string>
+    <string name="receiver_share_text">Выбрать получателя</string>
+    <string name="call_text">Позвонить</string>
+    <string name="email_info">Почта: %1$s в %2$s для %3$s: %4$s</string>
+    <string name="email_important">Важное сообщение!</string>
+    <string name="email_not_important">Не важное</string>
+    <string name="email_info_no_receiver">Нету получателя</string>
+    <string name="email_info_receiver">Получатель: %s</string>
+</resources>

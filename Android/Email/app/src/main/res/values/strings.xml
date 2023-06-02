@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Email</string>
+    <string name="very_important">Very important!</string>
+    <string name="sender">Sender</string>
+    <string name="title">Title</string>
+    <string name="text">Text</string>
+    <string name="add_email">Add email</string>
+    <string name="list_empty">List empty</string>
+    <string name="email_share_text">Share email</string>
+    <string name="receiver_share_text">Chose receiver</string>
+    <string name="call_text">Call</string>
+    <string name="email_info">Email: %1$s at %2$s to %3$s: %4$s</string>
+    <string name="email_important">Important email!</string>
+    <string name="email_not_important">Not important email!</string>
+    <string name="email_info_receiver">No receiver!</string>
+    <string name="email_info_no_receiver">No receiver!</string>
+</resources>

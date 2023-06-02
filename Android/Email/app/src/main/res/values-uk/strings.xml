@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Скринька</string>
+    <string name="very_important">Дуже важливо!</string>
+    <string name="sender">Вiдправник</string>
+    <string name="title">Заголовок</string>
+    <string name="text">Текст</string>
+    <string name="add_email">Додати емаiл</string>
+    <string name="list_empty">Список пустий</string>
+    <string name="email_share_text">Подiлитися</string>
+    <string name="receiver_share_text">Обрати отримувача</string>
+    <string name="call_text">Позвонити</string>
+    <string name="email_info">Телеграмма: %1$s в %2$s для %3$s: %4$s</string>
+    <string name="email_important">Важливе!</string>
+    <string name="email_not_important">Неважливе</string>
+    <string name="email_info_receiver">Отримувач</string>
+    <string name="email_info_no_receiver">Нема вiдправника</string>
+</resources>

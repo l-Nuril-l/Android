@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">TestApplication</string>
+    <string name="true_button">True</string>
+    <string name="false_button">False</string>
+    <string name="correct_toast">Correct!</string>
+    <string name="incorrect_toast">Incorrect!</string>
+    <string name="next_button">Next</string>
+    <string name="prev_button">Prev</string>
+    <string name="question_cpp">C++ is better than HTML</string>
+    <string name="question_js">JavaScript is based on Java</string>
+    <string name="question_php">PHP is my favorite programming language</string>
+    <string name="question_margo">Марго чи мама Марго?</string>
+    <string name="question_system">Android or IOS</string>
+    <string name="question_dl2">Dying Light 2 good game?</string>
+    <string name="question_web">React or Angular</string>
+    <string name="question_pi">PI is 3.14</string>
+    <string name="question_test">2 + 2 * 2 = 8</string>
+    <string name="question_100">66 + 44 = 100</string>
+    <string name="show_answer_button">Show answer</string>
+    <string name="warning_text">Are you sure you want to do this?</string>
+    <string name="cheat_button">Cheat!</string>
+    <string name="cheat_is_bad_text">Cheat is bad!</string>
+</resources>
